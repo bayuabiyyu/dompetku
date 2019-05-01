@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\AuthAdmin;
 
 use App\Http\Controllers\Controller;
-// use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 //Import Manual Bukan Default
 use Illuminate\Http\Request;
@@ -67,7 +67,7 @@ class LoginController extends Controller
     public function logoutAdmin()
     {
         Auth::guard('admin')->logout();
-        return redirect('/admin');
+        return redirect('/');
     }
 
 }
