@@ -30,6 +30,11 @@ Route::group(['prefix' => 'admin'], function(){
     Route::post('login', 'AuthAdmin\LoginController@login')->name('admin.login.submit');
     Route::get('/', 'AdminController@index')->name('admin.home');
     Route::get('/logout', 'AuthAdmin\LoginController@logoutAdmin')->name('admin.logout');
+
+    // Master Route
+    Route::get('/user/datatable', 'Admin\Master\UserController@dataTable')->name('user.datatable');
+    Route::resource('/user', 'Admin\Master\UserController');
+
 });
 
 // //ADMIN ROUTE

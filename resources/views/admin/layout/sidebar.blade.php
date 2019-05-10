@@ -47,7 +47,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="invoice.html"><i class="fa fa-circle-o"></i> User</a></li>
+            <li><a href="{{ route('user.index') }}"><i class="fa fa-circle-o"></i> User</a></li>
           </ul>
         </li>
         <li class="treeview">
