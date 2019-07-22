@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateJenisTable extends Migration
+class CreateIncomeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateJenisTable extends Migration
      */
     public function up()
     {
-        Schema::create('jenis', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('kode_jenis')->unique();
-            $table->string('nama_jenis');
-            $table->string('operator');
+        Schema::create('income', function (Blueprint $table) {
+            $table->date('tanggal');
             $table->string('user_id');
             $table->timestamps();
+            $table->primary(['tanggal', 'user_id']);
         });
     }
 
@@ -30,6 +28,6 @@ class CreateJenisTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jenis');
+        Schema::dropIfExists('income');
     }
 }

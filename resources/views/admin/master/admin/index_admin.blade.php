@@ -19,7 +19,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-              User Data
+              User Admin
             </h1>
             <ol class="breadcrumb">
               <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -46,9 +46,9 @@
                         <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Username</th>
                             <th>Name</th>
                             <th>Email</th>
+                            <th>Role</th>
                             <th>Email Verified</th>
                             <th>Created At</th>
                             <th>Updated At</th>
@@ -61,9 +61,9 @@
                         <tfoot>
                         <tr>
                             <th>No.</th>
-                            <th>Username</th>
                             <th>Name</th>
                             <th>Email</th>
+                            <th>Role</th>
                             <th>Email Verified</th>
                             <th>Created At</th>
                             <th>Updated At</th>
@@ -134,14 +134,14 @@ $.ajaxSetup({
         processing: true,
         serverSide: true,
         ajax: {
-            url: "{!! route('user.datatable') !!}",
+            url: "{!! route('admin.datatable') !!}",
             type : "POST"
         },
         columns: [
             { data: 'DT_RowIndex', name: 'DT_RowIndex' },
-            { data: 'username', name: 'username' },
             { data: 'name', name: 'name' },
             { data: 'email', name: 'email' },
+            { data: 'role', name: 'role' },
             { data: 'email_verified_at', name: 'email_verified_at' },
             { data: 'created_at', name: 'created_at' },
             { data: 'updated_at', name: 'updated_at' },
@@ -226,10 +226,8 @@ $('#modal-form').on('submit', '#form-data-add', function(e){
                     alert(res.msg);
                     RefreshData();
                     RefreshForm();
-                    $('#modal-form').modal('hide');
                 },
                 error: function(err){
-                    console.log(err);
                     $('#alert-validation').empty();
                     var error = err.responseJSON;
                     //Menampilkan pesan error dari json response error
@@ -283,7 +281,6 @@ $('#modal-form').on('submit', '#form-data-edit', function(e){
                     alert(res.msg);
                     RefreshData();
                     RefreshForm();
-                    $('#modal-form').modal('hide');
                 },
                 error: function(err){
                     $('#alert-validation').empty();

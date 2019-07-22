@@ -18,7 +18,8 @@ class AdminsTableSeeder extends Seeder
             'name' => 'admin',
             'email' => 'admin@mail.com',
             'password' => bcrypt('password'),
-            'role' => 'root_admin',
+            'role' => 'root',
+            'updated_by' => 'seed',
         ]);
         $batas = 20;
         for ($i=0; $i < $batas ; $i++) {
@@ -27,6 +28,7 @@ class AdminsTableSeeder extends Seeder
                 'email' => 'admin'.$i.'@mail.com',
                 'password' => bcrypt('password'),
                 'role' => 'admin',
+                'updated_by' => 'seed',
             ]);
         }
     }

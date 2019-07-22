@@ -1,4 +1,4 @@
-@extends('admin.layout.main')
+@extends('user.layout.main')
 
 {{-- FOR CSS SCRIPT ETC --}}
 @push('cssPage')
@@ -12,14 +12,14 @@
 
 {{-- FOR TITLE PAGE --}}
 @section('titlePage')
-    Dompetku | Admin Dashboard
+    Dompetku | Kategori
 @endsection
 
 @section('content')
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-              User Data
+              Kategori Data
             </h1>
             <ol class="breadcrumb">
               <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -46,14 +46,11 @@
                         <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Username</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Email Verified</th>
-                            <th>Created At</th>
-                            <th>Updated At</th>
+                            <th>Kode Kategori</th>
+                            <th>Nama Kategori</th>
+                            <th>Kode Jenis</th>
+                            <th>User ID</th>
                             <th>Action</th>
-
                         </tr>
                         </thead>
                         <tbody>
@@ -61,12 +58,10 @@
                         <tfoot>
                         <tr>
                             <th>No.</th>
-                            <th>Username</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Email Verified</th>
-                            <th>Created At</th>
-                            <th>Updated At</th>
+                            <th>Kode Kategori</th>
+                            <th>Nama Kategori</th>
+                            <th>Kode Jenis</th>
+                            <th>User ID</th>
                             <th>Action</th>
                         </tr>
                         </tfoot>
@@ -134,17 +129,15 @@ $.ajaxSetup({
         processing: true,
         serverSide: true,
         ajax: {
-            url: "{!! route('user.datatable') !!}",
+            url: "{!! route('kategori.datatable') !!}",
             type : "POST"
         },
         columns: [
             { data: 'DT_RowIndex', name: 'DT_RowIndex' },
-            { data: 'username', name: 'username' },
-            { data: 'name', name: 'name' },
-            { data: 'email', name: 'email' },
-            { data: 'email_verified_at', name: 'email_verified_at' },
-            { data: 'created_at', name: 'created_at' },
-            { data: 'updated_at', name: 'updated_at' },
+            { data: 'kode_kategori', name: 'kode_kategori' },
+            { data: 'nama_kategori', name: 'nama_kategori' },
+            { data: 'nama_jenis', name: 'nama_jenis' },
+            { data: 'user_id', name: 'user_id' },
             { data: 'action', name: 'action', orderable: false, searchable: false }
         ]
     });
@@ -164,7 +157,7 @@ function RefreshData(){
 // AJAX GET CREATE FORM
     $('#btnTambah').on('click', function(e){
         e.preventDefault();
-        var url = "{!! route('user.create') !!}";
+        var url = "{!! route('kategori.create') !!}";
         $.ajax({
             url: url,
             dataType: 'html',

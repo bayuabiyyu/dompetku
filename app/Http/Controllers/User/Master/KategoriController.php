@@ -1,20 +1,22 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Master;
+namespace App\Http\Controllers\User\Master;
 
 use Auth;
-use App\User;
+use App\Kategori;
+use App\Jenis;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use DataTables;
+use Illuminate\Validation\Rule;
 
-class UserController extends Controller
+
+class KategoriController extends Controller
 {
-    private $model;
 
     public function __construct(){
-        $this->middleware('auth:admin');
+        $this->middleware('auth');
     }
 
     /**
@@ -24,7 +26,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('admin.master.user.index_user');
+        return view('user.master.kategori.index_kategori');
     }
 
     /**
@@ -34,7 +36,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.master.user.form_add');
+        $data['jenis'] = Jenis::query()->get();
+        return view('user.master.kategori.form_add', compact('data'));
     }
 
     /**
@@ -45,20 +48,20 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-
         $this->validate($request,[
-            'username' => 'required|unique:users',
-            'password' => 'required',
-            'email' => 'required|email|unique:users'
+            'kode_kategori' => ['required', Rule::unique('kategori')->where(function($query) use ($request){
+                return $query->where('kode_kategori', "=", $request->kode_kategori)
+                             ->where('user_id', "=", Auth::user()->username);
+            })],
+            'nama_kategori' => 'required',
+            'kode_jenis' => 'required',
         ]);
 
-        $model = User::create([
-            'name' => $request->nama,
-            'username' => $request->username,
-            'email' => $request->email,
-            'email_verified_at' => Carbon::now(),
-            'password' => bcrypt($request->password),
-            'updated_by' => Auth::user()->id,
+        $model = Kategori::create([
+            'kode_kategori' => $request->kode_kategori,
+            'nama_kategori' => $request->nama_kategori,
+            'kode_jenis' => $request->kode_jenis,
+            'user_id' => Auth::user()->username,
         ]);
 
         if($model){
@@ -84,8 +87,10 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $data['user'] = User::findOrFail($id);
-        return view('admin.master.user.form_show', compact('data'));
+        $data['kategori'] = Kategori::where('kode_kategori', "=", $id)
+                            ->where('user_id', "=", Auth::user()->username)
+                            ->firstOrFail();
+        return view('user.master.kategori.form_show', compact('data'));
     }
 
     /**
@@ -96,8 +101,11 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $data['user'] = User::findOrFail($id);
-        return view('admin.master.user.form_edit', compact('data'));
+        $data['jenis'] = Jenis::query()->get();
+        $data['kategori'] = Kategori::where('kode_kategori', "=", $id)
+                            ->where('user_id', "=", Auth::user()->username)
+                            ->firstOrFail();
+        return view('user.master.kategori.form_edit', compact('data'));
     }
 
     /**
@@ -110,12 +118,16 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request,[
-            'nama' => 'required',
+            'nama_kategori' => 'required',
+            'kode_jenis' => 'required',
         ]);
 
-        $model = User::findOrFail($id);
+        $model = Kategori::where('kode_kategori', "=", $id)
+                ->where('user_id', "=", Auth::user()->username)
+                ->firstOrFail();
         $model->update([
-            'name' => $request->nama,
+            'nama_kategori' => $request->nama_kategori,
+            'kode_jenis' => $request->kode_jenis,
         ]);
 
         if($model){
@@ -131,7 +143,6 @@ class UserController extends Controller
         }
 
         return response()->json($msg);
-
     }
 
     /**
@@ -142,7 +153,9 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $model = User::where('id', '=', $id);
+        $model = Kategori::where('kode_kategori', "=", $id)
+                ->where('user_id', "=", Auth::user()->username)
+                ->firstOrFail();
         $model->delete();
         if($model){
             $msg = [
@@ -160,12 +173,12 @@ class UserController extends Controller
     }
 
     public function dataTable(){
-        $data = User::all();
+        $data = Kategori::getKategoriDataTable();
         return Datatables::of($data)->addIndexColumn()
             ->addColumn('action', function($data){
-                return '<a id="btnShow" href="'.route('user.show', $data->id).'" class="btn btn-xs btn-default"><i class="glyphicon glyphicon-search"></i> Show</a>
-                        <a id="btnEdit" href="'.route('user.edit', $data->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>
-                        <a id="btnDelete" href="'.route('user.destroy', $data->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
+                return '<a id="btnShow" href="'.route('kategori.show', $data->kode_kategori).'" class="btn btn-xs btn-default"><i class="glyphicon glyphicon-search"></i> Show</a>
+                        <a id="btnEdit" href="'.route('kategori.edit', $data->kode_kategori).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>
+                        <a id="btnDelete" href="'.route('kategori.destroy', $data->kode_kategori).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
             })
             ->make(true);
     }

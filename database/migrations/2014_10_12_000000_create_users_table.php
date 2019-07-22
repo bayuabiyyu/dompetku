@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->dateTime('last_login')->nullable();
             $table->dateTime('last_logout')->nullable();
             $table->string('api_key')->nullable();
+            $table->string('updated_by');
             $table->timestamps();
         });
     }

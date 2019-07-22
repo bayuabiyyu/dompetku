@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDompetHTable extends Migration
+class CreateExpenseTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateDompetHTable extends Migration
      */
     public function up()
     {
-        Schema::create('dompet_h', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->dateTime('tanggal')->unique();
-            $table->double('total_nominal');
-            $table->double('user_id');
+        Schema::create('expense', function (Blueprint $table) {
+            $table->date('tanggal');
+            $table->string('user_id');
             $table->timestamps();
+            $table->primary(['tanggal', 'user_id']);
         });
     }
 
@@ -29,6 +28,6 @@ class CreateDompetHTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dompet_h');
+        Schema::dropIfExists('expense');
     }
 }

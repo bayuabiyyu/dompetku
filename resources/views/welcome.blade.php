@@ -66,7 +66,7 @@
     <body>
         <div class="flex-center position-ref full-height">
                 <div class="top-right links">
-                    <a href="{{ url('/home') }}">Home</a>
+                    <a href="{{ route('home') }}">Home</a>
                     <a href="{{ route('register') }}">Register</a>
                     <a href="{{ route('admin.login') }}">Login Admin</a>
                 </div>

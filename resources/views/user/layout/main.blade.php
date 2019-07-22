@@ -1,6 +1,6 @@
-@include('admin.layout.header')
+@include('user.layout.header')
 
-@include('admin.layout.sidebar')
+@include('user.layout.sidebar')
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -8,6 +8,6 @@
   </div>
   <!-- /.content-wrapper -->
 
-@include('admin.layout.footer')
+@include('user.layout.footer')
 
-@include('admin.layout.control')
+@include('user.layout.control')

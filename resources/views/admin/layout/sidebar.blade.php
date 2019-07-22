@@ -48,6 +48,9 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="{{ route('user.index') }}"><i class="fa fa-circle-o"></i> User</a></li>
+            @if(Auth::user()->role == 'root')
+              <li><a href="{{ route('admin.index') }}"><i class="fa fa-circle-o"></i> Admin</a></li>
+            @endif
           </ul>
         </li>
         <li class="treeview">
