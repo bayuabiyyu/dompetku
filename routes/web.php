@@ -42,6 +42,9 @@ Route::group(['prefix' => 'user'], function(){
     Route::post('/income/datatable', 'User\Dompet\IncomeController@dataTable')->name('income.datatable');
     Route::resource('/income', 'User\Dompet\IncomeController');
 
+// PROFILE ROUTE
+    Route::get('/profile/ubahpassword', 'User\Master\ProfileController@formUbahPassword')->name('profile.form_ubah_password');
+    Route::post('/profile/actionubahpassword', 'User\Master\ProfileController@actionUbahPassword')->name('profile.action_ubah_password');
 });
 
 //ADMIN ROUTES

@@ -26,12 +26,12 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
-        <li class="treeview">
-          <a href="">
+        <li class="{{ (request()->routeIs('home')) ? 'active' : '' }}">
+          <a href="{{ route('home') }}">
             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
           </a>
         </li>
-        <li class="treeview">
+        <li class="treeview {{ (request()->routeIs('kategori.*')) ? 'active menu-open' : '' }}">
           <a href="#">
             <i class="fa fa-folder"></i> <span>Master Data</span>
             <span class="pull-right-container">
@@ -39,10 +39,10 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ route('kategori.index') }}"><i class="fa fa-circle-o"></i> Kategori</a></li>
+            <li class="{{ (request()->routeIs('kategori.*')) ? 'active' : '' }}"><a href="{{ route('kategori.index') }}"><i class="fa fa-circle-o"></i> Kategori</a></li>
           </ul>
         </li>
-        <li class="treeview">
+        <li class="treeview {{ (request()->routeIs('expense.*') || request()->routeIs('income.*')) ? 'active menu-open' : '' }}">
           <a href="#">
             <i class="fa fa-folder"></i> <span>Dompet</span>
             <span class="pull-right-container">
@@ -50,8 +50,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ route('expense.index') }}"><i class="fa fa-circle-o"></i> Pengeluaran (Expense)</a></li>
-            <li><a href="{{ route('income.index') }}"><i class="fa fa-circle-o"></i> Pemasukan (Income)</a></li>
+            <li class="{{ (request()->routeIs('expense.*')) ? 'active' : '' }}"><a href="{{ route('expense.index') }}"><i class="fa fa-circle-o"></i> Pengeluaran (Expense)</a></li>
+            <li class="{{ (request()->routeIs('income.*')) ? 'active' : '' }}"><a href="{{ route('income.index') }}"><i class="fa fa-circle-o"></i> Pemasukan (Income)</a></li>
           </ul>
         </li>
         <li class="treeview">
@@ -68,7 +68,7 @@
         </li>
         <li><a href="https://adminlte.io/docs"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
         <li class="header">SETTING ACCOUNT</li>
-        <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Ubah Password</span></a></li>
+        <li {{ (request()->routeIs('profile.*')) ? 'active' : '' }}><a href="{{ route('profile.form_ubah_password') }}"><i class="fa fa-circle-o text-red"></i> <span>Ubah Password</span></a></li>
         <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Reset Password</span></a></li>
       </ul>
     </section>
